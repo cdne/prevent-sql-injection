@@ -11,13 +11,25 @@ public class TodoDaoImplWithJdbc implements TodoDao {
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/todolist";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "postgres";
+    private static final String DB_PASSWORD = "1234";
+    private PreparedStatement preparedStatement;
 
     @Override
-    public void add(Todo todo) {
-        String query = "INSERT INTO todos (title, id, status) " +
-                "VALUES ('" + todo.title + "', '" + todo.id + "', '" + todo.status + "');";
-        executeQuery(query);
+    public void add(Todo todo) throws SQLException {
+
+        try(Connection connection = getConnection()){
+            preparedStatement = connection.prepareStatement("INSERT INTO todos (title, id, status) " +
+                    " VALUES(?, ?, ?)");
+            preparedStatement.setString(1, todo.title);
+            preparedStatement.setString(2, todo.id);
+            preparedStatement.setString(3, String.valueOf(todo.status));
+
+            int insertRow = preparedStatement.executeUpdate();
+        }
+//
+//        String query = "INSERT INTO todos (title, id, status) " +
+//                "VALUES ('" + todo.title + "', '" + todo.id + "', '" + todo.status + "');";
+//        executeQuery(query);
     }
 
     @Override

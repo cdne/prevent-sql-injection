@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,7 +9,7 @@ import java.util.stream.Collectors;
  */
 public interface TodoDao {
 
-    public void add(Todo todo);
+    public void add(Todo todo) throws SQLException;
 
     public Todo find(String id);
 

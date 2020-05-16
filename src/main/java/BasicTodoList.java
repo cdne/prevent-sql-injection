@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import spark.ModelAndView;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +20,12 @@ public class BasicTodoList {
 
     public static final String SUCCESS = "success";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         BasicTodoList todoApp = new BasicTodoList();
         todoApp.run();
     }
 
-    public void run() {
+    public void run() throws SQLException {
 
         addSampleData();
 
@@ -96,7 +97,7 @@ public class BasicTodoList {
             });
     }
 
-    private void addSampleData() {
+    private void addSampleData() throws SQLException {
         todoDao.add(Todo.create("first TODO item"));
         todoDao.add(Todo.create("second TODO item"));
         todoDao.add(Todo.create("third TODO item"));
